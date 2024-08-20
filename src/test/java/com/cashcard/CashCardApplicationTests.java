@@ -10,14 +10,12 @@ import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.test.annotation.DirtiesContext;
-import org.springframework.test.annotation.DirtiesContext.ClassMode;
 
 import java.net.URI;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-@DirtiesContext(classMode = ClassMode.AFTER_EACH_TEST_METHOD)
 class CashCardApplicationTests {
     @Autowired
     TestRestTemplate restTemplate;
@@ -44,9 +42,9 @@ class CashCardApplicationTests {
     }
 
     @Test
-    // @DirtiesContext
+    @DirtiesContext
     void shouldCreateANewCashCard() {
-        CashCard newCashCard = new CashCard(null, 250.00);
+        CashCard newCashCard = new CashCard(null, 250.00, "sarah1");
         ResponseEntity<Void> createResponse = restTemplate.postForEntity("/cashcards", newCashCard, Void.class);
         assertThat(createResponse.getStatusCode()).isEqualTo(HttpStatus.CREATED);
 
